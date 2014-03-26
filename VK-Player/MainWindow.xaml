@@ -1,8 +1,11 @@
 ﻿<Window x:Class="VK_Player.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="372" Width="542">
+    <Grid Background="#FF4A4A4A" Width="530" Height="340">
+        <Image HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
+        <Label Content="Артур Мироненко" HorizontalAlignment="Left" Margin="62,0,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171"/>
+
     </Grid>
 </Window>

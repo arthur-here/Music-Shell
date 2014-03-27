@@ -7,9 +7,7 @@
         <Image x:Name="avatarImage" HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
         <Label x:Name="usernameLabel" Content="Авторизируйтесь.." HorizontalAlignment="Left" Margin="50,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
-            <ListBox x:Name="leftListBox" Margin="4,24,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFD4D4D4">
-                <System:String>bjb</System:String>
-            </ListBox>
+            <ListBox x:Name="leftListBox" Margin="4,24,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFD4D4D4"/>
         </Border>
         <Button x:Name="prevButton" Content="" HorizontalAlignment="Left" Margin="19,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource roundButton}" Height="30" BorderBrush="{x:Null}">
             <Button.Background>
@@ -26,34 +24,80 @@
                 <ImageBrush ImageSource="images/rightButton.png"/>
             </Button.Background>
         </Button>
-        <Label Content="albums" HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" Width="59" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
-        <ListBox x:Name="rightListBox" Margin="201,79,13,53" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Label x:Name="leftLabel" Content="альбомы" HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" Width="77" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
+        <ListBox x:Name="rightListBox" Margin="201,79,13,53" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FFD4D4D4" ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
         <Rectangle HorizontalAlignment="Left" Height="233" Margin="195,54,0,0" Stroke="#FFD4D4D4" VerticalAlignment="Top" Width="1"/>
-        <Label Content="songs" HorizontalAlignment="Left" Margin="202,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.421,2.269" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
+        <Label x:Name="rightLabel" Content="песни" HorizontalAlignment="Left" Margin="202,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.421,2.269" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
         <Button x:Name="authButton" Content="" HorizontalAlignment="Left" Margin="504,21,0,0" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15" Click="authButton_Click">
-            <Button.Background>
-                <ImageBrush ImageSource="images/authButton.png" Stretch="None"/>
-            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images\authButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\authButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
         <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="482,21,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15">
-            <Button.Background>
-                <ImageBrush ImageSource="images/friendsButton.png" Stretch="None"/>
-            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images\friendsButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\friendsButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
+        
         <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="451,20,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
-            <Button.Background>
-                <ImageBrush ImageSource="images/searchButton.png" Stretch="None"/>
-            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images\searchButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\searchButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
+        
         <Slider HorizontalAlignment="Left" Margin="148,315,0,0" VerticalAlignment="Top" Width="345" Style="{DynamicResource thickSlider}"/>
         <Label x:Name="startTimeLabel" Content="0:00" HorizontalAlignment="Left" Margin="154,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
         <Label x:Name="finishTimeLabel" Content="3:56" HorizontalAlignment="Left" Margin="451,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
         <Label x:Name="artistLabel" Content="Chad VanGaalen" HorizontalAlignment="Left" Margin="219,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold"/>
         <Label x:Name="titleLabel" Content="- Molten Ligth" HorizontalAlignment="Left" Margin="311,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4"/>
         <Button x:Name="exitButton" Content="" Margin="517,0,3,327" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="10" VerticalAlignment="Bottom" Click="exitButton_Click">
-            <Button.Background>
-                <ImageBrush ImageSource="images/closeButton.png" Stretch="None"/>
-            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images\closeButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\closeButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
 
     </Grid>

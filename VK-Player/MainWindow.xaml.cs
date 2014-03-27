@@ -30,12 +30,12 @@ namespace VK_Player
         public MainWindow()
         {
             InitializeComponent();
+            leftListBox.SelectionChanged += new SelectionChangedEventHandler(leftListBox_SelectionChanged);
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
-            leftListBox.Items.Add("Hello");
         }
 
         private void authButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +63,7 @@ namespace VK_Player
 
             user.setAvatar(avatarImage);
 
-            user.getAlbums(leftListBox);
+            user.loadAlbums(leftListBox);
         }
 
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -74,6 +74,15 @@ namespace VK_Player
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        void leftListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            rightListBox.Items.Clear();
+
+            ListBox list = sender as ListBox;
+            Album selectedAlbum = user.albums[list.SelectedIndex];
+            user.loadSongsFromAlbum(selectedAlbum, rightListBox);
         }
         
 

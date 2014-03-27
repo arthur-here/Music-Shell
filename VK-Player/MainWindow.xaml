@@ -6,8 +6,8 @@
 
     </Window.Resources>
     <Grid Background="#FF4A4A4A" Width="530" Height="340" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-        <Image HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
-        <Label x:Name="usernameLabel" Content="Авторизируйтесь.." HorizontalAlignment="Left" Margin="62,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
+        <Image x:Name="avatarImage" HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
+        <Label x:Name="usernameLabel" Content="Авторизируйтесь.." HorizontalAlignment="Left" Margin="50,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
             <ListBox x:Name="leftListBox" Margin="-1,32,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Height="200"/>
         </Border>

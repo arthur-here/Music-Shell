@@ -43,7 +43,7 @@ namespace VK_Player
             AuthForm authorizationForm = new AuthForm();
             authorizationForm.ShowDialog();
 
-            WebRequest usernameRequestServer = WebRequest.Create("https://api.vk.com/method/users.get?user_ids=" + Properties.Settings.Default.id);
+            WebRequest usernameRequestServer = WebRequest.Create("https://api.vk.com/method/users.get?user_ids=" + Properties.Settings.Default.id + "&fields=uid,first_name,last_name,photo_50");
             WebResponse usernameResponseServer = usernameRequestServer.GetResponse();
             Stream dataStream = usernameResponseServer.GetResponseStream();
             StreamReader dataReader = new StreamReader(dataStream);
@@ -60,6 +60,8 @@ namespace VK_Player
             user = returnedUsers[0];
 
             usernameLabel.Content = user.first_name + " " + user.last_name;
+
+            user.setAvatar(avatarImage);
         }
 
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -69,7 +71,7 @@ namespace VK_Player
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
-            ;
+            Application.Current.Shutdown();
         }
         
 

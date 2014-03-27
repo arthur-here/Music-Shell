@@ -71,14 +71,15 @@ namespace VK_Player
                 if (String.IsNullOrEmpty(accessToken))
                 {
                     System.Windows.MessageBox.Show("Error. Key is not found");
+                    this.Close();
                     return;
                 }
                 
                 Properties.Settings.Default.id = Convert.ToString(userId);
                 Properties.Settings.Default.token = accessToken;
                 Properties.Settings.Default.auth = true;
+                this.Close();
             }
         }
-        
     }
 }

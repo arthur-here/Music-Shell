@@ -17,6 +17,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using System.Web;
+using System.Windows.Threading;
 
 namespace VK_Player
 {
@@ -27,6 +28,7 @@ namespace VK_Player
     {
         private User user;
         private MediaPlayer player;
+        private DispatcherTimer timer;
 
         public MainWindow()
         {
@@ -34,6 +36,11 @@ namespace VK_Player
             leftListBox.SelectionChanged += new SelectionChangedEventHandler(leftListBox_SelectionChanged);
             rightListBox.SelectionChanged += new SelectionChangedEventHandler(rightListBox_SelectionChanged);
             player = new MediaPlayer();
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += new EventHandler(timer_Tick);
+            player.MediaOpened += new EventHandler(player_MediaOpened);
+            player.MediaFailed += new EventHandler<ExceptionEventArgs>(player_MediaFailed);
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -55,6 +62,8 @@ namespace VK_Player
             leftListBox.Items.Add("Все аудиозаписи");
 
             user.loadAlbums(leftListBox);
+
+            authButton.Visibility = Visibility.Hidden;
         }
 
         private User loginUser()
@@ -99,11 +108,56 @@ namespace VK_Player
         void rightListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox list = sender as ListBox;
+            if (list.Items.Count != 0)
+            {
+                user.currentSongIndex = list.SelectedIndex;
 
-            player.Open(new Uri(user.tracks[list.SelectedIndex].url));
-            player.Play();
+                player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+                player.Play();
+            }
         }
         
+        void player_MediaOpened(object sender, EventArgs e)
+        {
+            MediaPlayer mp = sender as MediaPlayer;
+            String time = mp.NaturalDuration.ToString();
+            startTimeLabel.Content = "00:00";
+            
+            time = time.Remove(time.IndexOf('.'));
+            time = time.Remove(0, 3);
+            finishTimeLabel.Content = time;
 
+            titleLabel.Content = user.tracks[user.currentSongIndex].artist + " – " + user.tracks[user.currentSongIndex].title;
+
+            trackSlider.Maximum = mp.NaturalDuration.TimeSpan.TotalSeconds;
+            trackSlider.Value = 0;
+
+            timer.Start();
+        }
+
+        void player_MediaFailed(object sender, ExceptionEventArgs e)
+        {
+            MessageBox.Show("Error while loading audio", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            trackSlider.Value = player.Position.TotalSeconds;
+            int currentSeconds = Convert.ToInt32(player.Position.TotalSeconds);
+            int currentMinutes = currentSeconds / 60;
+            currentSeconds = currentSeconds % 60;
+            string min = currentMinutes.ToString();
+            string sec = currentSeconds.ToString();
+            min = (min.Length > 1) ? min : ("0" + min);
+            sec = (sec.Length > 1) ? sec : ("0" + sec);
+            startTimeLabel.Content = min + ":" + sec;
+        }
+
+        private void trackSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            player.Pause();
+            player.Position = TimeSpan.FromSeconds(trackSlider.Value);
+            player.Play();
+        }
     }
 }

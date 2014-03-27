@@ -28,12 +28,15 @@
         <ListBox x:Name="rightListBox" Margin="201,79,13,53" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FFD4D4D4" ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
         <Rectangle HorizontalAlignment="Left" Height="233" Margin="195,54,0,0" Stroke="#FFD4D4D4" VerticalAlignment="Top" Width="1"/>
         <Label x:Name="rightLabel" Content="песни" HorizontalAlignment="Left" Margin="202,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.421,2.269" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
-        <Button x:Name="authButton" Content="" HorizontalAlignment="Left" Margin="504,21,0,0" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15" Click="authButton_Click">
+        <Button x:Name="authButton" Content="" HorizontalAlignment="Left" Margin="22,17,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="20" Click="authButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="images/loginButton.png" Stretch="Uniform"/>
+            </Button.Background>
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
-                        <Image Name="imageHover" Source="images\authButton-highlited.png" Stretch="None" Visibility="Collapsed" />
-                        <Image Name="image" Source="images\authButton.png" Stretch="None" Visibility="Visible" />
+                        <Image Name="imageHover" Source="images\loginButton-highlited.png" Stretch="Uniform" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\loginButton.png" Stretch="Uniform" Visibility="Visible" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -44,7 +47,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="482,21,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15">
+        <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="500,20,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -60,8 +63,8 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        
-        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="451,20,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
+
+        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="469,18,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -77,12 +80,11 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        
-        <Slider HorizontalAlignment="Left" Margin="148,315,0,0" VerticalAlignment="Top" Width="345" Style="{DynamicResource thickSlider}"/>
-        <Label x:Name="startTimeLabel" Content="0:00" HorizontalAlignment="Left" Margin="154,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="finishTimeLabel" Content="3:56" HorizontalAlignment="Left" Margin="451,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="artistLabel" Content="Chad VanGaalen" HorizontalAlignment="Left" Margin="219,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold"/>
-        <Label x:Name="titleLabel" Content="- Molten Ligth" HorizontalAlignment="Left" Margin="311,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4"/>
+
+        <Slider x:Name="trackSlider" HorizontalAlignment="Left" Margin="148,315,0,0" VerticalAlignment="Top" Width="345" Style="{DynamicResource thickSlider}" PreviewMouseLeftButtonUp="trackSlider_PreviewMouseLeftButtonUp"/>
+        <Label x:Name="startTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="154,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
+        <Label x:Name="finishTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="450,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
+        <Label x:Name="titleLabel" Content="" HorizontalAlignment="Left" Margin="184,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" Width="268"/>
         <Button x:Name="exitButton" Content="" Margin="517,0,3,327" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="10" VerticalAlignment="Bottom" Click="exitButton_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">

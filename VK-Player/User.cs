@@ -23,6 +23,8 @@ namespace VK_Player
         public List<Album> albums;
         public List<Track> tracks;
 
+        public int currentSongIndex;
+
         public void setAvatar(Image im)
         {
             var bi = new BitmapImage();
@@ -73,7 +75,7 @@ namespace VK_Player
 
             foreach(Track tr in this.tracks)
             {
-                lb.Items.Add(tr.artist + " " + tr.title);
+                lb.Items.Add(tr.artist + " – " + tr.title);
             }
         }
 

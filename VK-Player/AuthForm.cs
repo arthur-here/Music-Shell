@@ -78,6 +78,7 @@ namespace VK_Player
                 Properties.Settings.Default.id = Convert.ToString(userId);
                 Properties.Settings.Default.token = accessToken;
                 Properties.Settings.Default.auth = true;
+                Properties.Settings.Default.Save();
                 this.Close();
             }
         }

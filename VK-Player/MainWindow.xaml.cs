@@ -159,5 +159,40 @@ namespace VK_Player
             player.Position = TimeSpan.FromSeconds(trackSlider.Value);
             player.Play();
         }
+
+        private void mainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + 1 + "&access_token=" + Properties.Settings.Default.token);
+            WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
+            Stream dataStream = tracksResponseServer.GetResponseStream();
+            StreamReader dataReader = new StreamReader(dataStream);
+            string tacksResponse = dataReader.ReadToEnd();
+            dataReader.Close();
+            dataStream.Close();
+
+            tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
+
+            JToken token = JToken.Parse(tacksResponse);
+
+            try {
+                List<Track> tTracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
+
+                this.user = loginUser();
+                
+                usernameLabel.Content = user.first_name + " " + user.last_name;
+
+                user.setAvatar(avatarImage);
+
+                leftListBox.Items.Add("Все аудиозаписи");
+
+                user.loadAlbums(leftListBox);
+
+                authButton.Visibility = Visibility.Hidden;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

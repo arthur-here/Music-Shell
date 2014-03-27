@@ -1,13 +1,13 @@
 ﻿<Window x:Name="mainWindow" x:Class="VK_Player.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="347" Width="542" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" >
+        Title="MainWindow" Height="347" Width="542" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" Loaded="mainWindow_Loaded" >
     <Window.Resources>
 
     </Window.Resources>
     <Grid Background="#FF4A4A4A" Width="530" Height="340" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Image HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
-        <Label Content="Артур Мироненко" HorizontalAlignment="Left" Margin="62,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
+        <Label x:Name="usernameLabel" Content="Авторизируйтесь.." HorizontalAlignment="Left" Margin="62,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
             <ListBox x:Name="leftListBox" Margin="-1,32,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Height="200"/>
         </Border>
@@ -48,8 +48,13 @@
         <Slider HorizontalAlignment="Left" Margin="148,315,0,0" VerticalAlignment="Top" Width="345" Style="{DynamicResource thickSlider}"/>
         <Label x:Name="startTimeLabel" Content="0:00" HorizontalAlignment="Left" Margin="154,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
         <Label x:Name="finishTimeLabel" Content="3:56" HorizontalAlignment="Left" Margin="451,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="artistLabel" Content="Chad VanGaalen" HorizontalAlignment="Left" Margin="210,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold"/>
-        <Label x:Name="titleLabel" Content="- Molten Ligth" HorizontalAlignment="Left" Margin="302,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4"/>
+        <Label x:Name="artistLabel" Content="Chad VanGaalen" HorizontalAlignment="Left" Margin="219,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold"/>
+        <Label x:Name="titleLabel" Content="- Molten Ligth" HorizontalAlignment="Left" Margin="311,292,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4"/>
+        <Button x:Name="exitButton" Content="" Margin="517,0,3,327" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="10" VerticalAlignment="Bottom" Click="exitButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="images/closeButton.png" Stretch="None"/>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

@@ -12,8 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms.WebBrowser;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.IO;
+using System.Web;
 
 namespace VK_Player
 {
@@ -22,6 +25,8 @@ namespace VK_Player
     /// </summary>
     public partial class MainWindow : Window
     {
+        User user;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +40,38 @@ namespace VK_Player
 
         private void authButton_Click(object sender, RoutedEventArgs e)
         {
+            AuthForm authorizationForm = new AuthForm();
+            authorizationForm.ShowDialog();
+
+            WebRequest usernameRequestServer = WebRequest.Create("https://api.vk.com/method/users.get?user_ids=" + Properties.Settings.Default.id);
+            WebResponse usernameResponseServer = usernameRequestServer.GetResponse();
+            Stream dataStream = usernameResponseServer.GetResponseStream();
+            StreamReader dataReader = new StreamReader(dataStream);
+            string usernameResponse = dataReader.ReadToEnd();
+            dataReader.Close();
+            dataStream.Close();
+
+            usernameResponse = HttpUtility.HtmlDecode(usernameResponse);
+
+            JToken token = JToken.Parse(usernameResponse);
+
+            List<User> returnedUsers = token["response"].Children().Select(c => c.ToObject<User>()).ToList<User>();
+
+            user = returnedUsers[0];
+
+            usernameLabel.Content = user.first_name + " " + user.last_name;
+        }
+
+        private void mainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
             
         }
+
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            ;
+        }
+        
+
     }
 }

@@ -25,12 +25,15 @@ namespace VK_Player
     /// </summary>
     public partial class MainWindow : Window
     {
-        User user;
+        private User user;
+        private MediaPlayer player;
 
         public MainWindow()
         {
             InitializeComponent();
             leftListBox.SelectionChanged += new SelectionChangedEventHandler(leftListBox_SelectionChanged);
+            rightListBox.SelectionChanged += new SelectionChangedEventHandler(rightListBox_SelectionChanged);
+            player = new MediaPlayer();
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -43,6 +46,19 @@ namespace VK_Player
             AuthForm authorizationForm = new AuthForm();
             authorizationForm.ShowDialog();
 
+            this.user = loginUser();
+
+            usernameLabel.Content = user.first_name + " " + user.last_name;
+
+            user.setAvatar(avatarImage);
+
+            leftListBox.Items.Add("Все аудиозаписи");
+
+            user.loadAlbums(leftListBox);
+        }
+
+        private User loginUser()
+        {
             WebRequest usernameRequestServer = WebRequest.Create("https://api.vk.com/method/users.get?user_ids=" + Properties.Settings.Default.id + "&fields=uid,first_name,last_name,photo_50");
             WebResponse usernameResponseServer = usernameRequestServer.GetResponse();
             Stream dataStream = usernameResponseServer.GetResponseStream();
@@ -57,18 +73,7 @@ namespace VK_Player
 
             List<User> returnedUsers = token["response"].Children().Select(c => c.ToObject<User>()).ToList<User>();
 
-            user = returnedUsers[0];
-
-            usernameLabel.Content = user.first_name + " " + user.last_name;
-
-            user.setAvatar(avatarImage);
-
-            user.loadAlbums(leftListBox);
-        }
-
-        private void mainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            
+            return returnedUsers[0];
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -81,8 +86,22 @@ namespace VK_Player
             rightListBox.Items.Clear();
 
             ListBox list = sender as ListBox;
-            Album selectedAlbum = user.albums[list.SelectedIndex];
-            user.loadSongsFromAlbum(selectedAlbum, rightListBox);
+
+            if (list.SelectedIndex == 0)
+                user.loadAllSongs(200, rightListBox);
+            else
+            {
+                Album selectedAlbum = user.albums[list.SelectedIndex - 1];
+                user.loadSongsFromAlbum(selectedAlbum, rightListBox);
+            }
+        }
+
+        void rightListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox list = sender as ListBox;
+
+            player.Open(new Uri(user.tracks[list.SelectedIndex].url));
+            player.Play();
         }
         
 

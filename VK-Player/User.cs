@@ -77,5 +77,27 @@ namespace VK_Player
             }
         }
 
+        public void loadAllSongs(int numOfLoadedSongs, ListBox lb)
+        {
+            WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + numOfLoadedSongs + "&access_token=" + Properties.Settings.Default.token);
+            WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
+            Stream dataStream = tracksResponseServer.GetResponseStream();
+            StreamReader dataReader = new StreamReader(dataStream);
+            string tacksResponse = dataReader.ReadToEnd();
+            dataReader.Close();
+            dataStream.Close();
+
+            tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
+
+            JToken token = JToken.Parse(tacksResponse);
+
+            this.tracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
+
+            foreach (Track tr in this.tracks)
+            {
+                lb.Items.Add(tr.artist + " – " + tr.title);
+            }
+        }
+
     }
 }

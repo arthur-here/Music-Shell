@@ -1,15 +1,15 @@
-﻿<Window x:Name="mainWindow" x:Class="VK_Player.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="mainWindow" x:Class="VK_Player.MainWindow"
         Title="MainWindow" Height="347" Width="542" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" Loaded="mainWindow_Loaded" >
-    <Window.Resources>
-
-    </Window.Resources>
     <Grid Background="#FF4A4A4A" Width="530" Height="340" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Image x:Name="avatarImage" HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
         <Label x:Name="usernameLabel" Content="Авторизируйтесь.." HorizontalAlignment="Left" Margin="50,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
-            <ListBox x:Name="leftListBox" Margin="-1,32,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Height="200"/>
+            <ListBox x:Name="leftListBox" Margin="4,24,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFD4D4D4">
+                <System:String>bjb</System:String>
+            </ListBox>
         </Border>
         <Button x:Name="prevButton" Content="" HorizontalAlignment="Left" Margin="19,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource roundButton}" Height="30" BorderBrush="{x:Null}">
             <Button.Background>
@@ -26,10 +26,10 @@
                 <ImageBrush ImageSource="images/rightButton.png"/>
             </Button.Background>
         </Button>
-        <Label Content="albums" HorizontalAlignment="Left" Margin="19,54,0,0" VerticalAlignment="Top" Width="59" FontSize="14" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight"/>
-        <ListBox x:Name="rightListBox" Margin="195,83,13,57" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{x:Null}" Background="{x:Null}" Height="200"/>
+        <Label Content="albums" HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" Width="59" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
+        <ListBox x:Name="rightListBox" Margin="201,79,13,53" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{x:Null}" Background="{x:Null}"/>
         <Rectangle HorizontalAlignment="Left" Height="233" Margin="195,54,0,0" Stroke="#FFD4D4D4" VerticalAlignment="Top" Width="1"/>
-        <Label Content="songs" HorizontalAlignment="Left" Margin="201,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.421,2.269" FontSize="14" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight"/>
+        <Label Content="songs" HorizontalAlignment="Left" Margin="202,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.421,2.269" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
         <Button x:Name="authButton" Content="" HorizontalAlignment="Left" Margin="504,21,0,0" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15" Click="authButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="images/authButton.png" Stretch="None"/>

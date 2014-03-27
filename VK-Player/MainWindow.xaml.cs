@@ -62,6 +62,8 @@ namespace VK_Player
             usernameLabel.Content = user.first_name + " " + user.last_name;
 
             user.setAvatar(avatarImage);
+
+            user.getAlbums(leftListBox);
         }
 
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)

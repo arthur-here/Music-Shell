@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms.WebBrowser;
+
 
 namespace VK_Player
 {
@@ -23,6 +25,17 @@ namespace VK_Player
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+            leftListBox.Items.Add("Hello");
+        }
+
+        private void authButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

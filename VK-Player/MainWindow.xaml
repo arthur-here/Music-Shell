@@ -13,7 +13,7 @@
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
             <ListBox x:Name="leftListBox" Margin="4,24,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFD4D4D4"/>
         </Border>
-        <Button x:Name="prevButton" Content="" HorizontalAlignment="Left" Margin="19,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource prevButton}" Height="30" BorderBrush="{x:Null}">
+        <Button x:Name="prevButton" Content="" HorizontalAlignment="Left" Margin="19,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource prevButton}" Height="30" BorderBrush="{x:Null}" Click="prevButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="images/leftButton.png"/>
             </Button.Background>
@@ -24,7 +24,7 @@
             </Button.Background>
 
         </Button>
-        <Button x:Name="nextButton" Content="" HorizontalAlignment="Left" Margin="96,300,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource nextButton}" Height="30" BorderBrush="{x:Null}" RenderTransformOrigin="3.833,0.667">
+        <Button x:Name="nextButton" Content="" HorizontalAlignment="Left" Margin="96,300,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource nextButton}" Height="30" BorderBrush="{x:Null}" RenderTransformOrigin="3.833,0.667" Click="nextButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="images/rightButton.png"/>
             </Button.Background>

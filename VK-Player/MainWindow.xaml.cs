@@ -276,5 +276,41 @@ namespace VK_Player
             }
         }
 
+        private void prevButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (player.Position.TotalSeconds > 5)
+            {
+                player.Position = TimeSpan.FromMilliseconds(0);
+            }
+            else if (user.currentSongIndex != 0)
+            {
+                user.currentSongIndex--;
+                player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+                rightListBox.SelectedIndex = user.currentSongIndex;
+            }
+            else
+            {
+                player.Pause();
+                player.Position = TimeSpan.FromMilliseconds(0);
+                state = MediaState.Pause;
+                playButton.Style = FindResource("playButton") as Style;
+            }
+        }
+
+        private void nextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (user.currentSongIndex < user.tracks.Count()-1)
+            {
+                user.currentSongIndex++;
+                player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+                rightListBox.SelectedIndex = user.currentSongIndex;
+            } else
+            {
+                user.currentSongIndex = 0;
+                player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+                rightListBox.SelectedIndex = user.currentSongIndex;
+            }
+        }
+
     }
 }

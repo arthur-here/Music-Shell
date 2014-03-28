@@ -23,7 +23,7 @@ namespace VK_Player
         public List<Album> albums;
         public List<Track> tracks;
 
-        public int currentSongIndex;
+        public int currentSongIndex = -1;
 
         public void setAvatar(Image im)
         {

@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="mainWindow" x:Class="VK_Player.MainWindow"
         Title="MainWindow" Height="347" Width="542" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" Loaded="mainWindow_Loaded" >
+    <Window.Resources>
+        <Image x:Key="Play" Source="images/playButton.png" Height="26" Width="26" />
+        <Image x:Key="Stop" Source="images/pauseButton.png" Height="26" Width="26"/>
+    </Window.Resources>
     <Grid Background="#FF4A4A4A" Width="530" Height="340" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Image x:Name="avatarImage" HorizontalAlignment="Left" Height="32" Margin="13,10,0,0" VerticalAlignment="Top" Width="32"/>
-        <Label x:Name="usernameLabel" Content="Авторизируйтесь.." HorizontalAlignment="Left" Margin="50,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
+        <Label x:Name="usernameLabel" Content="Авторизируйтесь..." HorizontalAlignment="Left" Margin="50,3,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4"/>
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
             <ListBox x:Name="leftListBox" Margin="4,24,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFD4D4D4"/>
         </Border>
@@ -14,10 +18,11 @@
                 <ImageBrush ImageSource="images/leftButton.png"/>
             </Button.Background>
         </Button>
-        <Button x:Name="playButton" Content="" HorizontalAlignment="Left" Margin="57,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource roundButton}" Height="30" BorderBrush="{x:Null}">
+        <Button x:Name="playButton" HorizontalAlignment="Left" Margin="57,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource playButton}" Height="30" BorderBrush="{x:Null}" Click="playButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="images/playButton.png"/>
             </Button.Background>
+
         </Button>
         <Button x:Name="nextButton" Content="" HorizontalAlignment="Left" Margin="96,300,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource roundButton}" Height="30" BorderBrush="{x:Null}" RenderTransformOrigin="3.833,0.667">
             <Button.Background>

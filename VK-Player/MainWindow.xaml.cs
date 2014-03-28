@@ -24,11 +24,15 @@ namespace VK_Player
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    enum MediaState { Play, Pause }
+
     public partial class MainWindow : Window
     {
         private User user;
         private MediaPlayer player;
         private DispatcherTimer timer;
+        private MediaState state = MediaState.Pause;
 
         public MainWindow()
         {
@@ -122,7 +126,9 @@ namespace VK_Player
             MediaPlayer mp = sender as MediaPlayer;
             String time = mp.NaturalDuration.ToString();
             startTimeLabel.Content = "00:00";
-            
+
+            state = MediaState.Play;
+
             time = time.Remove(time.IndexOf('.'));
             time = time.Remove(0, 3);
             finishTimeLabel.Content = time;
@@ -133,6 +139,7 @@ namespace VK_Player
             trackSlider.Value = 0;
 
             timer.Start();
+            mp.Play();
         }
 
         void player_MediaFailed(object sender, ExceptionEventArgs e)
@@ -162,19 +169,19 @@ namespace VK_Player
 
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + 1 + "&access_token=" + Properties.Settings.Default.token);
-            WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
-            Stream dataStream = tracksResponseServer.GetResponseStream();
-            StreamReader dataReader = new StreamReader(dataStream);
-            string tacksResponse = dataReader.ReadToEnd();
-            dataReader.Close();
-            dataStream.Close();
-
-            tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
-
-            JToken token = JToken.Parse(tacksResponse);
-
             try {
+                WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + 1 + "&access_token=" + Properties.Settings.Default.token);
+                WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
+                Stream dataStream = tracksResponseServer.GetResponseStream();
+                StreamReader dataReader = new StreamReader(dataStream);
+                string tacksResponse = dataReader.ReadToEnd();
+                dataReader.Close();
+                dataStream.Close();
+
+                tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
+
+                JToken token = JToken.Parse(tacksResponse);
+
                 List<Track> tTracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
 
                 this.user = loginUser();
@@ -188,11 +195,40 @@ namespace VK_Player
                 user.loadAlbums(leftListBox);
 
                 authButton.Visibility = Visibility.Hidden;
+
+                user.loadAllSongs(200, rightListBox);
             }
             catch (Exception ex)
             {
 
             }
         }
+
+        private void playButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (state == MediaState.Pause)
+            {
+                user.currentSongIndex = (user.currentSongIndex < 0) ? 0 : user.currentSongIndex;
+
+                if (player.Source != null)
+                {
+                    player.Play();
+                    state = MediaState.Play;
+                    playButton.Style = Resources["pauseButton"] as Style;
+                } else if (user.tracks[user.currentSongIndex] != null)
+                {
+                    player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+                    state = MediaState.Play;
+                    playButton.Style = Resources["pauseButton"] as Style;
+                }
+            }
+            else
+            {
+                state = MediaState.Pause;
+                player.Pause();
+                playButton.Style = Resources["playButton"] as Style;
+            }
+        }
+
     }
 }

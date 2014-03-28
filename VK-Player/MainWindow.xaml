@@ -13,7 +13,7 @@
         <Border BorderBrush="#FFD4D4D4" BorderThickness="1" HorizontalAlignment="Left" Height="233" Margin="13,54,0,0" VerticalAlignment="Top" Width="504" Background="#FF717171">
             <ListBox x:Name="leftListBox" Margin="4,24,320,-1" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFD4D4D4"/>
         </Border>
-        <Button x:Name="prevButton" Content="" HorizontalAlignment="Left" Margin="19,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource roundButton}" Height="30" BorderBrush="{x:Null}">
+        <Button x:Name="prevButton" Content="" HorizontalAlignment="Left" Margin="19,299,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource prevButton}" Height="30" BorderBrush="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="images/leftButton.png"/>
             </Button.Background>
@@ -24,7 +24,7 @@
             </Button.Background>
 
         </Button>
-        <Button x:Name="nextButton" Content="" HorizontalAlignment="Left" Margin="96,300,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource roundButton}" Height="30" BorderBrush="{x:Null}" RenderTransformOrigin="3.833,0.667">
+        <Button x:Name="nextButton" Content="" HorizontalAlignment="Left" Margin="96,300,0,0" VerticalAlignment="Top" Width="30" Style="{DynamicResource nextButton}" Height="30" BorderBrush="{x:Null}" RenderTransformOrigin="3.833,0.667">
             <Button.Background>
                 <ImageBrush ImageSource="images/rightButton.png"/>
             </Button.Background>
@@ -52,7 +52,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="500,20,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15">
+        <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="475,19,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -69,7 +69,7 @@
             </Button.Template>
         </Button>
 
-        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="469,18,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
+        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="447,18,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -86,10 +86,10 @@
             </Button.Template>
         </Button>
 
-        <Slider x:Name="trackSlider" HorizontalAlignment="Left" Margin="148,315,0,0" VerticalAlignment="Top" Width="345" Style="{DynamicResource thickSlider}" PreviewMouseLeftButtonUp="trackSlider_PreviewMouseLeftButtonUp"/>
-        <Label x:Name="startTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="154,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="finishTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="450,293,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="titleLabel" Content="" HorizontalAlignment="Left" Margin="184,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" Width="268"/>
+        <Slider x:Name="trackSlider" HorizontalAlignment="Left" Margin="145,315,0,0" VerticalAlignment="Top" Width="322" Style="{DynamicResource thickSlider}" PreviewMouseLeftButtonUp="trackSlider_PreviewMouseLeftButtonUp"/>
+        <Label x:Name="startTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="153,292,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
+        <Label x:Name="finishTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="422,290,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
+        <Label x:Name="titleLabel" Content="" HorizontalAlignment="Left" Margin="186,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" Width="238"/>
         <Button x:Name="exitButton" Content="" Margin="517,0,3,327" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="10" VerticalAlignment="Bottom" Click="exitButton_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -106,6 +106,31 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Button x:Name="downloadButton" Content="" HorizontalAlignment="Left" Margin="494,21,0,0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="11">
+            <Button.Background>
+                <ImageBrush/>
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="imageHover" Source="images/downloadButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image x:Name="image" Source="images/downloadButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="soundButton" Content="" HorizontalAlignment="Left" Margin="488,309,0,0" VerticalAlignment="Top" Width="18" BorderBrush="{x:Null}" MouseWheel="soundButton_MouseWheel" Style="{DynamicResource buttonWithouMouseOver}">
+            <Button.Background>
+                <ImageBrush ImageSource="images/soundButton-3.png" Stretch="None"/>
+            </Button.Background>
+        </Button>
+        <Label x:Name="volumeLabel" Content="50" HorizontalAlignment="Left" Margin="479,287,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4" Width="38" HorizontalContentAlignment="Center"/>
 
     </Grid>
 </Window>

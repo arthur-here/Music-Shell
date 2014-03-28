@@ -18,6 +18,7 @@ using System.Net;
 using System.IO;
 using System.Web;
 using System.Windows.Threading;
+using System.Windows.Resources;
 
 namespace VK_Player
 {
@@ -118,6 +119,8 @@ namespace VK_Player
 
                 player.Open(new Uri(user.tracks[user.currentSongIndex].url));
                 player.Play();
+                state = MediaState.Play;
+                playButton.Style = FindResource("pauseButton") as Style;
             }
         }
         
@@ -214,19 +217,62 @@ namespace VK_Player
                 {
                     player.Play();
                     state = MediaState.Play;
-                    playButton.Style = Resources["pauseButton"] as Style;
+                    playButton.Style = FindResource("pauseButton") as Style;
                 } else if (user.tracks[user.currentSongIndex] != null)
                 {
                     player.Open(new Uri(user.tracks[user.currentSongIndex].url));
                     state = MediaState.Play;
-                    playButton.Style = Resources["pauseButton"] as Style;
+                    playButton.Style = FindResource("pauseButton") as Style;
                 }
             }
             else
             {
                 state = MediaState.Pause;
                 player.Pause();
-                playButton.Style = Resources["playButton"] as Style;
+                playButton.Style = FindResource("playButton") as Style;
+            }
+        }
+
+        private void changeSoundButtonImage(int state)
+        {
+            Uri resourceUri = new Uri("images/soundButton-" + state.ToString() + ".png", UriKind.Relative);
+            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+            var brush = new ImageBrush();
+            brush.ImageSource = temp;
+
+            soundButton.Background = brush;
+        }
+
+        private void soundButton_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double startVolume = player.Volume;
+            if (e.Delta > 0 && player.Volume < 1.0)
+            {
+                player.Volume += 0.05;
+                volumeLabel.Content = (player.Volume * 100).ToString();
+                if (player.Volume > 0 && startVolume == 0)
+                    changeSoundButtonImage(1);
+                else if (player.Volume > 0.33 && startVolume < 0.33)
+                    changeSoundButtonImage(2);
+                else if (player.Volume > 0.66 && startVolume < 0.66)
+                    changeSoundButtonImage(3);
+                else if (player.Volume == 0)
+                    changeSoundButtonImage(0);
+            } 
+            else if (e.Delta < 0 && player.Volume > 0.0)
+            {
+                player.Volume -= 0.05;
+                volumeLabel.Content = (player.Volume * 100).ToString();
+                if (player.Volume < 100 && startVolume == 100)
+                    changeSoundButtonImage(3);
+                else if (player.Volume < 0.66 && startVolume > 0.66)
+                    changeSoundButtonImage(2);
+                else if (player.Volume < 0.33 && startVolume > 0.33)
+                    changeSoundButtonImage(1);
+                else if (player.Volume == 0)
+                    changeSoundButtonImage(0);
             }
         }
 

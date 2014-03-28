@@ -127,7 +127,7 @@
         </Button>
         <Button x:Name="soundButton" Content="" HorizontalAlignment="Left" Margin="488,309,0,0" VerticalAlignment="Top" Width="18" BorderBrush="{x:Null}" MouseWheel="soundButton_MouseWheel" Style="{DynamicResource buttonWithouMouseOver}">
             <Button.Background>
-                <ImageBrush ImageSource="images/soundButton-3.png" Stretch="None"/>
+                <ImageBrush ImageSource="images/soundButton-2.png" Stretch="None"/>
             </Button.Background>
         </Button>
         <Label x:Name="volumeLabel" Content="50" HorizontalAlignment="Left" Margin="479,287,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4" Width="38" HorizontalContentAlignment="Center"/>

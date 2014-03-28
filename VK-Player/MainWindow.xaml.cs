@@ -251,7 +251,7 @@ namespace VK_Player
             if (e.Delta > 0 && player.Volume < 1.0)
             {
                 player.Volume += 0.05;
-                volumeLabel.Content = (player.Volume * 100).ToString();
+                volumeLabel.Content = Convert.ToInt16(player.Volume * 100).ToString();
                 if (player.Volume > 0 && startVolume == 0)
                     changeSoundButtonImage(1);
                 else if (player.Volume > 0.33 && startVolume < 0.33)
@@ -264,7 +264,7 @@ namespace VK_Player
             else if (e.Delta < 0 && player.Volume > 0.0)
             {
                 player.Volume -= 0.05;
-                volumeLabel.Content = (player.Volume * 100).ToString();
+                volumeLabel.Content = Convert.ToInt16(player.Volume * 100).ToString();
                 if (player.Volume < 100 && startVolume == 100)
                     changeSoundButtonImage(3);
                 else if (player.Volume < 0.66 && startVolume > 0.66)

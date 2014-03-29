@@ -22,8 +22,10 @@ namespace VK_Player
 
         public List<Album> albums;
         public List<Track> tracks;
+        public List<Friend> friends;
 
         public int currentSongIndex = -1;
+        public int currentFriendIndex = -1;
 
         public void setAvatar(Image im)
         {
@@ -50,6 +52,8 @@ namespace VK_Player
             JToken token = JToken.Parse(albumsResponse);
 
             this.albums = token["response"].Children().Skip(1).Select(c => c.ToObject<Album>()).ToList<Album>();
+
+            lb.Items.Add("Все аудиозаписи");
 
             foreach(Album al in this.albums)
             {
@@ -85,19 +89,41 @@ namespace VK_Player
             WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
             Stream dataStream = tracksResponseServer.GetResponseStream();
             StreamReader dataReader = new StreamReader(dataStream);
-            string tacksResponse = dataReader.ReadToEnd();
+            string tracksResponse = dataReader.ReadToEnd();
             dataReader.Close();
             dataStream.Close();
 
-            tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
+            tracksResponse = HttpUtility.HtmlDecode(tracksResponse);
 
-            JToken token = JToken.Parse(tacksResponse);
+            JToken token = JToken.Parse(tracksResponse);
 
             this.tracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
 
             foreach (Track tr in this.tracks)
             {
                 lb.Items.Add(tr.artist + " – " + tr.title);
+            }
+        }
+
+        public void loadFriends(ListBox lb)
+        {
+            WebRequest friendsRequestServer = WebRequest.Create("https://api.vk.com/method/friends.get?user_id=" + Properties.Settings.Default.id + "&fields=city" + "&access_token=" + Properties.Settings.Default.token);
+            WebResponse friendsResponseServer = friendsRequestServer.GetResponse();
+            Stream dataStream = friendsResponseServer.GetResponseStream();
+            StreamReader dataReader = new StreamReader(dataStream);
+            string friendsResponse = dataReader.ReadToEnd();
+            dataReader.Close();
+            dataStream.Close();
+
+            friendsResponse = HttpUtility.HtmlDecode(friendsResponse);
+
+            JToken token = JToken.Parse(friendsResponse);
+
+            this.friends = token["response"].Children().Skip(1).Select(c => c.ToObject<Friend>()).ToList<Friend>();
+
+            foreach (Friend fr in this.friends)
+            {
+                lb.Items.Add(fr.first_name + " " + fr.last_name);
             }
         }
 

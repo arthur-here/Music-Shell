@@ -61,8 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Album.cs" />
-    <Compile Include="Track.cs" />
+    <Compile Include="vk-classes\Album.cs" />
+    <Compile Include="vk-classes\Friend.cs" />
+    <Compile Include="vk-classes\Track.cs" />
     <Compile Include="User.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -160,6 +161,10 @@
     <Resource Include="images\soundButton-1.png" />
     <Resource Include="images\soundButton-2.png" />
     <Resource Include="images\soundButton-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\userTracksButton-highlited.png" />
+    <Resource Include="images\userTracksButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

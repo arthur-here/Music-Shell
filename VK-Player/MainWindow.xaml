@@ -52,7 +52,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="475,19,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15">
+        <Button x:Name="friendsButton" Content="" HorizontalAlignment="Left" Margin="450,19,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15" Click="friendsButton_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -69,7 +69,7 @@
             </Button.Template>
         </Button>
 
-        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="447,18,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
+        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="422,18,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -131,6 +131,25 @@
             </Button.Background>
         </Button>
         <Label x:Name="volumeLabel" Content="50" HorizontalAlignment="Left" Margin="479,287,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4" Width="38" HorizontalContentAlignment="Center"/>
+        <Button x:Name="userTracksButton" Content="" HorizontalAlignment="Left" Margin="471,18,0,0" VerticalAlignment="Top" Width="15" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="15" Click="userTracksButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="images/userTracksButton.png"/>
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="imageHover" Source="images/userTracksButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image x:Name="image" Source="images/userTracksButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
     </Grid>
 </Window>

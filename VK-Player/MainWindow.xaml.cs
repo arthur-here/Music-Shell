@@ -27,6 +27,7 @@ namespace VK_Player
     /// </summary>
     /// 
     enum MediaState { Play, Pause }
+    enum AppState { UserSongs, Friends}
 
     public partial class MainWindow : Window
     {
@@ -34,6 +35,7 @@ namespace VK_Player
         private MediaPlayer player;
         private DispatcherTimer timer;
         private MediaState state = MediaState.Pause;
+        private AppState appState = AppState.UserSongs;
 
         public MainWindow()
         {
@@ -63,8 +65,6 @@ namespace VK_Player
             usernameLabel.Content = user.first_name + " " + user.last_name;
 
             user.setAvatar(avatarImage);
-
-            leftListBox.Items.Add("Все аудиозаписи");
 
             user.loadAlbums(leftListBox);
 
@@ -98,26 +98,37 @@ namespace VK_Player
         void leftListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             rightListBox.Items.Clear();
-
             ListBox list = sender as ListBox;
-
-            if (list.SelectedIndex == 0)
-                user.loadAllSongs(200, rightListBox);
-            else
+            if (list.Items.Count != 0)
             {
-                Album selectedAlbum = user.albums[list.SelectedIndex - 1];
-                user.loadSongsFromAlbum(selectedAlbum, rightListBox);
-            }
+                switch (appState)
+                {
+                    case AppState.UserSongs:
+                        if (list.SelectedIndex == 0)
+                            user.loadAllSongs(200, rightListBox);
+                        else
+                        {
+                            Album selectedAlbum = user.albums[list.SelectedIndex - 1];
+                            user.loadSongsFromAlbum(selectedAlbum, rightListBox);
+                        }
+                        break;
+                    case AppState.Friends:
+                        user.currentFriendIndex = list.SelectedIndex;
+                        user.friends[user.currentFriendIndex].loadAllSongs(200, rightListBox, user.tracks);
+                        break;
+                }
+            }    
         }
 
         void rightListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox list = sender as ListBox;
+            
             if (list.Items.Count != 0)
             {
                 user.currentSongIndex = list.SelectedIndex;
-
                 player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+
                 player.Play();
                 state = MediaState.Play;
                 playButton.Style = FindResource("pauseButton") as Style;
@@ -192,8 +203,6 @@ namespace VK_Player
                 usernameLabel.Content = user.first_name + " " + user.last_name;
 
                 user.setAvatar(avatarImage);
-
-                leftListBox.Items.Add("Все аудиозаписи");
 
                 user.loadAlbums(leftListBox);
 
@@ -310,6 +319,24 @@ namespace VK_Player
                 player.Open(new Uri(user.tracks[user.currentSongIndex].url));
                 rightListBox.SelectedIndex = user.currentSongIndex;
             }
+        }
+
+        private void friendsButton_Click(object sender, RoutedEventArgs e)
+        {
+            leftListBox.Items.Clear();
+            rightListBox.Items.Clear();
+            user.loadFriends(leftListBox);
+            leftLabel.Content = "друзья";
+            appState = AppState.Friends;
+        }
+
+        private void userTracksButton_Click(object sender, RoutedEventArgs e)
+        {
+            leftListBox.Items.Clear();
+            rightListBox.Items.Clear();
+            user.loadAlbums(leftListBox);
+            appState = AppState.UserSongs;
+            leftLabel.Content = "альбомы";
         }
 
     }

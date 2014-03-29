@@ -69,7 +69,7 @@
             </Button.Template>
         </Button>
 
-        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="422,18,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
+        <Button x:Name="searchButton" Content="" HorizontalAlignment="Left" Margin="397,16,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <StackPanel>
@@ -140,6 +140,25 @@
                     <StackPanel>
                         <Image x:Name="imageHover" Source="images/userTracksButton-highlited.png" Stretch="None" Visibility="Collapsed" />
                         <Image x:Name="image" Source="images/userTracksButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="imageHover" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="image" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="settingsButton" Content="" HorizontalAlignment="Left" Margin="423,16,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
+            <Button.Background>
+                <ImageBrush ImageSource="images/settingsButton.png"/>
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="imageHover" Source="images/settingsButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image x:Name="image" Source="images/settingsButton.png" Stretch="None" Visibility="Visible" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">

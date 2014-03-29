@@ -1,4 +1,4 @@
-﻿namespace VK_Player
+﻿namespace Music_Shell
 {
     partial class AuthForm
     {

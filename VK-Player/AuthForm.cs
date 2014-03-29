@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace VK_Player
+namespace Music_Shell
 {
     public partial class AuthForm : Form
     {

@@ -11,7 +11,7 @@ using System.Net;
 using System.IO;
 using System.Web;
 
-namespace VK_Player
+namespace Music_Shell
 {
     class User
     {

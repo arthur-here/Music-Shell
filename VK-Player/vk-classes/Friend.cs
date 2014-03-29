@@ -10,7 +10,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace VK_Player
+namespace Music_Shell
 {
     class Friend
     {

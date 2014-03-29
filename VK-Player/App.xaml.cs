@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace VK_Player
+namespace Music_Shell
 {
     /// <summary>
     /// Interaction logic for App.xaml

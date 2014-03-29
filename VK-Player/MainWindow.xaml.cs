@@ -20,7 +20,7 @@ using System.Web;
 using System.Windows.Threading;
 using System.Windows.Resources;
 
-namespace VK_Player
+namespace Music_Shell
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -210,18 +210,6 @@ namespace VK_Player
                 player.Pause();
                 playButton.Style = FindResource("playButton") as Style;
             }
-        }
-
-        private void changeSoundButtonImage(int state)
-        {
-            Uri resourceUri = new Uri("images/soundButton-" + state.ToString() + ".png", UriKind.Relative);
-            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-            var brush = new ImageBrush();
-            brush.ImageSource = temp;
-
-            soundButton.Background = brush;
         }
 
         private void soundButton_MouseWheel(object sender, MouseWheelEventArgs e)

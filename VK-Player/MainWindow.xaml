@@ -158,7 +158,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="19" Margin="419,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Background="#FF4A4A4A" Foreground="#FFD4D4D4" Text="234" CaretBrush="#00000000" KeyDown="searchTextBox_KeyDown" LostFocus="searchTextBox_LostFocus" Visibility="Hidden"/>
+        <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="19" Margin="419,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Background="#FF4A4A4A" Foreground="#FFD4D4D4" Text="" CaretBrush="#00000000" KeyDown="searchTextBox_KeyDown" LostFocus="searchTextBox_LostFocus" Visibility="Hidden"/>
 
     </Grid>
 </Window>

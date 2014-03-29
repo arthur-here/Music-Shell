@@ -232,26 +232,26 @@ namespace VK_Player
                 player.Volume += 0.05;
                 volumeLabel.Content = Convert.ToInt16(player.Volume * 100).ToString();
                 if (player.Volume > 0 && startVolume == 0)
-                    changeSoundButtonImage(1);
+                    soundButton.Style = FindResource("soundButton1") as Style;
                 else if (player.Volume > 0.33 && startVolume < 0.33)
-                    changeSoundButtonImage(2);
+                    soundButton.Style = FindResource("soundButton2") as Style;
                 else if (player.Volume > 0.66 && startVolume < 0.66)
-                    changeSoundButtonImage(3);
+                    soundButton.Style = FindResource("soundButton3") as Style;
                 else if (player.Volume == 0)
-                    changeSoundButtonImage(0);
+                    soundButton.Style = FindResource("soundButton0") as Style;
             } 
             else if (e.Delta < 0 && player.Volume > 0.0)
             {
                 player.Volume -= 0.05;
                 volumeLabel.Content = Convert.ToInt16(player.Volume * 100).ToString();
                 if (player.Volume < 100 && startVolume == 100)
-                    changeSoundButtonImage(3);
+                    soundButton.Style = FindResource("soundButton3") as Style;
                 else if (player.Volume < 0.66 && startVolume > 0.66)
-                    changeSoundButtonImage(2);
+                    soundButton.Style = FindResource("soundButton2") as Style;
                 else if (player.Volume < 0.33 && startVolume > 0.33)
-                    changeSoundButtonImage(1);
+                    soundButton.Style = FindResource("soundButton1") as Style;
                 else if (player.Volume == 0)
-                    changeSoundButtonImage(0);
+                    soundButton.Style = FindResource("soundButton0") as Style;
             }
         }
 

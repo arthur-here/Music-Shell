@@ -173,6 +173,12 @@
   <ItemGroup>
     <Resource Include="images\authButton-after.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\soundButton-0-highlited.png" />
+    <Resource Include="images\soundButton-1-highlited.png" />
+    <Resource Include="images\soundButton-2-highlited.png" />
+    <Resource Include="images\soundButton-3-highlited.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

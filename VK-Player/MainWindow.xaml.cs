@@ -44,6 +44,7 @@ namespace VK_Player
             rightListBox.SelectionChanged += new SelectionChangedEventHandler(rightListBox_SelectionChanged);
             player = new MediaPlayer();
             timer = new DispatcherTimer();
+            user = new User();
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += new EventHandler(timer_Tick);
             player.MediaOpened += new EventHandler(player_MediaOpened);
@@ -60,34 +61,8 @@ namespace VK_Player
             AuthForm authorizationForm = new AuthForm();
             authorizationForm.ShowDialog();
 
-            this.user = loginUser();
-
-            usernameLabel.Content = user.first_name + " " + user.last_name;
-
-            user.setAvatar(avatarImage);
-
-            user.loadAlbums(leftListBox);
-
-            authButton.Visibility = Visibility.Hidden;
-        }
-
-        private User loginUser()
-        {
-            WebRequest usernameRequestServer = WebRequest.Create("https://api.vk.com/method/users.get?user_ids=" + Properties.Settings.Default.id + "&fields=uid,first_name,last_name,photo_50");
-            WebResponse usernameResponseServer = usernameRequestServer.GetResponse();
-            Stream dataStream = usernameResponseServer.GetResponseStream();
-            StreamReader dataReader = new StreamReader(dataStream);
-            string usernameResponse = dataReader.ReadToEnd();
-            dataReader.Close();
-            dataStream.Close();
-
-            usernameResponse = HttpUtility.HtmlDecode(usernameResponse);
-
-            JToken token = JToken.Parse(usernameResponse);
-
-            List<User> returnedUsers = token["response"].Children().Select(c => c.ToObject<User>()).ToList<User>();
-
-            return returnedUsers[0];
+            if (user.auth(usernameLabel, avatarImage, leftListBox, rightListBox))
+                authButton.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));     
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -163,7 +138,10 @@ namespace VK_Player
 
         void timer_Tick(object sender, EventArgs e)
         {
-            trackSlider.Value = player.Position.TotalSeconds;
+            if (Convert.ToBoolean(trackSlider.Tag) != false)
+            {
+                trackSlider.Value = player.Position.TotalSeconds;
+            }
             int currentSeconds = Convert.ToInt32(player.Position.TotalSeconds);
             int currentMinutes = currentSeconds / 60;
             currentSeconds = currentSeconds % 60;
@@ -176,43 +154,23 @@ namespace VK_Player
 
         private void trackSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            trackSlider.Tag = true;
             player.Pause();
             player.Position = TimeSpan.FromSeconds(trackSlider.Value);
             player.Play();
         }
 
+        private void trackSlider_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            trackSlider.Tag = false;
+        }
+
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            try {
-                WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + 1 + "&access_token=" + Properties.Settings.Default.token);
-                WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
-                Stream dataStream = tracksResponseServer.GetResponseStream();
-                StreamReader dataReader = new StreamReader(dataStream);
-                string tacksResponse = dataReader.ReadToEnd();
-                dataReader.Close();
-                dataStream.Close();
-
-                tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
-
-                JToken token = JToken.Parse(tacksResponse);
-
-                List<Track> tTracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
-
-                this.user = loginUser();
-                
-                usernameLabel.Content = user.first_name + " " + user.last_name;
-
-                user.setAvatar(avatarImage);
-
-                user.loadAlbums(leftListBox);
-
-                authButton.Visibility = Visibility.Hidden;
-
-                user.loadAllSongs(200, rightListBox);
-            }
-            catch (Exception ex)
+            if (user.checkToken())
             {
-
+                if (user.auth(usernameLabel, avatarImage, leftListBox, rightListBox))
+                    authButton.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
             }
         }
 

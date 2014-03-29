@@ -27,6 +27,47 @@ namespace VK_Player
         public int currentSongIndex = -1;
         public int currentFriendIndex = -1;
 
+        public bool auth(Label usernameLabel, Image avatarImage, ListBox albumsListBox, ListBox songsListBox)
+        {
+            try
+            {
+                WebRequest usernameRequestServer = WebRequest.Create("https://api.vk.com/method/users.get?user_ids=" + Properties.Settings.Default.id + "&fields=uid,first_name,last_name,photo_50");
+                WebResponse usernameResponseServer = usernameRequestServer.GetResponse();
+                Stream dataStream = usernameResponseServer.GetResponseStream();
+                StreamReader dataReader = new StreamReader(dataStream);
+                string usernameResponse = dataReader.ReadToEnd();
+                dataReader.Close();
+                dataStream.Close();
+
+                usernameResponse = HttpUtility.HtmlDecode(usernameResponse);
+
+                JToken token = JToken.Parse(usernameResponse);
+
+                List<User> returnedUsers = token["response"].Children().Select(c => c.ToObject<User>()).ToList<User>();
+
+                this.uid = returnedUsers[0].uid;
+                this.first_name = returnedUsers[0].first_name;
+                this.last_name = returnedUsers[0].last_name;
+                this.photo_50 = returnedUsers[0].photo_50;
+
+                usernameLabel.Content = this.first_name + " " + this.last_name;
+
+                this.setAvatar(avatarImage);
+
+                albumsListBox.Items.Clear();
+                this.loadAlbums(albumsListBox);
+
+                songsListBox.Items.Clear();
+                this.loadAllSongs(200, songsListBox);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public void setAvatar(Image im)
         {
             var bi = new BitmapImage();
@@ -127,5 +168,30 @@ namespace VK_Player
             }
         }
 
+        public bool checkToken()
+        {
+            try
+            {
+                WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + 1 + "&access_token=" + Properties.Settings.Default.token);
+                WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
+                Stream dataStream = tracksResponseServer.GetResponseStream();
+                StreamReader dataReader = new StreamReader(dataStream);
+                string tacksResponse = dataReader.ReadToEnd();
+                dataReader.Close();
+                dataStream.Close();
+
+                tacksResponse = HttpUtility.HtmlDecode(tacksResponse);
+
+                JToken token = JToken.Parse(tacksResponse);
+
+                List<Track> tTracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

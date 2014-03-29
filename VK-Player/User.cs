@@ -193,5 +193,27 @@ namespace VK_Player
                 return false;
             }
         }
+
+        public void globalSearch(string songName, int numOfLoadedSongs, ListBox lb)
+        {
+            WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.search?q=" + songName + "&count=" + numOfLoadedSongs + "&sort=2" + "&access_token=" + Properties.Settings.Default.token);
+            WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
+            Stream dataStream = tracksResponseServer.GetResponseStream();
+            StreamReader dataReader = new StreamReader(dataStream);
+            string tracksResponse = dataReader.ReadToEnd();
+            dataReader.Close();
+            dataStream.Close();
+
+            tracksResponse = HttpUtility.HtmlDecode(tracksResponse);
+
+            JToken token = JToken.Parse(tracksResponse);
+
+            this.tracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
+
+            foreach (Track tr in this.tracks)
+            {
+                lb.Items.Add(tr.artist + " – " + tr.title);
+            }
+        }
     }
 }

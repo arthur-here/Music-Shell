@@ -27,7 +27,7 @@ namespace VK_Player
     /// </summary>
     /// 
     enum MediaState { Play, Pause }
-    enum AppState { UserSongs, Friends}
+    enum AppState { UserSongs, Friends, GlobalSearch}
 
     public partial class MainWindow : Window
     {
@@ -48,7 +48,9 @@ namespace VK_Player
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += new EventHandler(timer_Tick);
             player.MediaOpened += new EventHandler(player_MediaOpened);
+            player.MediaEnded += new EventHandler(player_MediaEnded);
             player.MediaFailed += new EventHandler<ExceptionEventArgs>(player_MediaFailed);
+            trackSlider.Tag = true;
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -131,6 +133,16 @@ namespace VK_Player
             mp.Play();
         }
 
+        void player_MediaEnded(object sender, EventArgs e)
+        {
+            if (user.currentSongIndex != user.tracks.Count()-1)
+            {
+                user.currentSongIndex++;
+                player.Open(new Uri(user.tracks[user.currentSongIndex].url));
+                rightListBox.SelectedIndex = user.currentSongIndex;
+            }
+        }
+
         void player_MediaFailed(object sender, ExceptionEventArgs e)
         {
             MessageBox.Show("Error while loading audio", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -159,7 +171,7 @@ namespace VK_Player
             player.Position = TimeSpan.FromSeconds(trackSlider.Value);
             player.Play();
         }
-
+        
         private void trackSlider_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             trackSlider.Tag = false;
@@ -296,6 +308,34 @@ namespace VK_Player
             appState = AppState.UserSongs;
             leftLabel.Content = "альбомы";
         }
+
+        private void searchButton_Click(object sender, RoutedEventArgs e)
+        {
+            searchTextBox.Visibility = Visibility.Visible;
+            searchTextBox.Focus();
+            searchTextBox.SelectAll();
+        }
+
+        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                searchTextBox.Visibility = Visibility.Hidden;
+
+                if (searchTextBox.Text != "")
+                {
+                    leftListBox.Items.Clear();
+                    rightListBox.Items.Clear();
+                    user.globalSearch(searchTextBox.Text, 200, rightListBox);
+                }
+            }
+        }
+
+        private void searchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            searchTextBox.Visibility = Visibility.Hidden;
+        }
+
 
     }
 }

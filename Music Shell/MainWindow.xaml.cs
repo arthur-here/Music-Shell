@@ -36,6 +36,7 @@ namespace Music_Shell
         private DispatcherTimer timer;
         private MediaState state = MediaState.Pause;
         private AppState appState = AppState.UserSongs;
+        private bool IsToggle;
 
         public MainWindow()
         {
@@ -69,6 +70,7 @@ namespace Music_Shell
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
+            TrayIcon.Icon = null;
             Application.Current.Shutdown();
         }
 
@@ -324,6 +326,97 @@ namespace Music_Shell
             searchTextBox.Visibility = Visibility.Hidden;
         }
 
+        private void downloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            user.save(rightListBox.SelectedIndex);
+        }
 
+        #region Tray
+        // override для расширения абстрактной реализации метода( унаследовано от абстрактного класса) поэтому override
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e); // базовый функционал приложения в момент запуска для возможности последующего возврата
+            createTrayIcon();
+        }
+        private System.Windows.Forms.NotifyIcon TrayIcon = null;
+        private System.Windows.Controls.ContextMenu TrayMenu = null;
+
+        private bool createTrayIcon()
+        {
+            bool result = false;
+            if (TrayIcon == null)
+            {
+                TrayIcon = new System.Windows.Forms.NotifyIcon();
+                TrayIcon.Icon = Music_Shell.Properties.Resources.icon128;
+                TrayIcon.Text = (titleLabel.Content.ToString() == "") ? ("Music Shell") : (titleLabel.Content.ToString());
+                TrayMenu = Resources["TrayMenu"] as System.Windows.Controls.ContextMenu;// создание контекстного меню трея
+                TrayIcon.Click += delegate(object sender, EventArgs e)//Делегат обрабатывающий щелчок мыши
+                {
+                    if ((e as System.Windows.Forms.MouseEventArgs).Button == System.Windows.Forms.MouseButtons.Left)
+                    {
+                        ShowHideMainWindow(sender, null);
+                    }
+                    else
+                    {
+                        TrayMenu.IsOpen = true;
+                        Activate();
+                    }
+                };
+                result = true;
+            }
+            else
+            {
+                result = true;
+            }
+            TrayIcon.Visible = true;
+            return result;
+        }
+        private void ShowHideMainWindow(object sender, RoutedEventArgs e)
+        {
+            TrayMenu.IsOpen = false;
+            if (IsVisible)
+            {
+                Hide();
+
+                (TrayMenu.Items[0] as System.Windows.Controls.MenuItem).Header = "Показать";//Изменение надписи на пункте контектного меню
+            }
+            else
+            {
+                Show();
+
+                (TrayMenu.Items[0] as System.Windows.Controls.MenuItem).Header = "Скрыть";//Изменение надписи на пункте контектного меню
+                WindowState = CurrentWindowState;
+                Activate();
+            }
+        }
+        //Отмена отображения вкладки на панели задач
+        private WindowState fCurrentWindowState = WindowState.Normal;
+        public WindowState CurrentWindowState
+        {
+            get { return fCurrentWindowState; }
+            set { fCurrentWindowState = value; }
+        }
+
+        protected override void OnStateChanged(EventArgs e)
+        {
+            base.OnStateChanged(e);
+            if (this.WindowState == System.Windows.WindowState.Minimized)
+            {
+                Hide();//Если минимизированно окно
+
+                (TrayMenu.Items[0] as System.Windows.Controls.MenuItem).Header = "Показать";
+            }
+            else
+            {
+                CurrentWindowState = WindowState;//Запоминание текущего состояния окна
+            }
+        }
+        #endregion
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow sw = new SettingsWindow();
+            sw.ShowDialog();
+        }
     }
 }

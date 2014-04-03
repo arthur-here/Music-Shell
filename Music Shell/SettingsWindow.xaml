@@ -1,0 +1,61 @@
+﻿<Window x:Class="Music_Shell.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings" Height="116" Width="300" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="{x:Null}" Icon="icon128.ico">
+    <Grid Background="#FF4A4A4A" Width="287" Loaded="Grid_Loaded" Margin="6,16,6,1" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <Label Content="Укажите путь сохранения:" Height="32" HorizontalAlignment="Left" Margin="9,8,0,0" Name="labelPath" VerticalAlignment="Top" Width="204" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4" FontSize="16" />
+        <TextBox Height="20" HorizontalAlignment="Left" Margin="12,39,0,0" Name="tbPath" VerticalAlignment="Top" Width="233" Background="#FFD4D4D4 " />
+        <Button BorderBrush="{x:Null}" Content="" Height="24" HorizontalAlignment="Left" Margin="253,39,0,0" Name="pathButton" RenderTransformOrigin="-0.135,0.662" VerticalAlignment="Top" Width="18" Click="pathButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images\searchButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\searchButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter Property="UIElement.Visibility" TargetName="imageHover" Value="Visible" />
+                            <Setter Property="UIElement.Visibility" TargetName="image" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button BorderBrush="{x:Null}" Content="" Height="10" Margin="270,0,1,83" Name="exitButton" RenderTransformOrigin="-0.135,0.662" VerticalAlignment="Bottom" Click="exitButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images\closeButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images\closeButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter Property="UIElement.Visibility" TargetName="imageHover" Value="Visible" />
+                            <Setter Property="UIElement.Visibility" TargetName="image" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button BorderBrush="{x:Null}" Content="" Height="12" HorizontalAlignment="Left" Margin="253,76,0,0" Name="downloadButton" RenderTransformOrigin="-0.135,0.662" VerticalAlignment="Top" Width="17" Click="btnSaveSettings_Click">
+            <Button.Background>
+                <ImageBrush />
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image Name="imageHover" Source="images/downloadButton-highlited.png" Stretch="None" Visibility="Collapsed" />
+                        <Image Name="image" Source="images/downloadButton.png" Stretch="None" Visibility="Visible" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsMouseOver" Value="true">
+                            <Setter Property="UIElement.Visibility" TargetName="imageHover" Value="Visible" />
+                            <Setter Property="UIElement.Visibility" TargetName="image" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</Window>

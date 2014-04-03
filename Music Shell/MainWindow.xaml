@@ -6,6 +6,13 @@
     <Window.Resources>
         <Image x:Key="Play" Source="images/playButton.png" Height="26" Width="26" />
         <Image x:Key="Stop" Source="images/pauseButton.png" Height="26" Width="26"/>
+        <ContextMenu x:Key="TrayMenu" Background="#FF4A4A4A">
+            <MenuItem Header="Скрыть" Click="ShowHideMainWindow" FontSize="14" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4" />
+            <MenuItem Header="Следующий трек" FontSize="14" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4" Click="nextButton_Click" />
+            <MenuItem Header="Предыдущий трек" FontSize="14" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4" Click="prevButton_Click" />
+            <Separator />
+            <MenuItem Header="Выход"  FontSize="14" FontFamily="Segoe UI Light" Foreground="#FFD4D4D4" Click="exitButton_Click" />
+        </ContextMenu>
     </Window.Resources>
     <Grid Background="#FF4A4A4A" Width="530" Height="340" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Grid.ColumnDefinitions>
@@ -78,7 +85,7 @@
         <Slider x:Name="trackSlider" HorizontalAlignment="Left" Margin="145,314,0,6" Width="322" Style="{DynamicResource thickSlider}" PreviewMouseLeftButtonUp="trackSlider_PreviewMouseLeftButtonUp" Height="20" VerticalAlignment="Center" PreviewMouseLeftButtonDown="trackSlider_PreviewMouseLeftButtonDown"/>
         <Label x:Name="startTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="153,292,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
         <Label x:Name="finishTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="422,290,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="titleLabel" Content="" HorizontalAlignment="Left" Margin="186,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" Width="238"/>
+        <Label x:Name="titleLabel" Content="" HorizontalAlignment="Left" Margin="186,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" Width="238" UseLayoutRounding="False"/>
         <Button x:Name="exitButton" Content="" Margin="517,0,3,327" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="10" VerticalAlignment="Bottom" Click="exitButton_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -95,7 +102,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="downloadButton" Content="" HorizontalAlignment="Left" Margin="494,21,0,0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="11">
+        <Button x:Name="downloadButton" Content="" HorizontalAlignment="Left" Margin="494,21,0,0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="11" Click="downloadButton_Click">
             <Button.Background>
                 <ImageBrush/>
             </Button.Background>
@@ -139,7 +146,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="settingsButton" Content="" HorizontalAlignment="Left" Margin="423,16,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18">
+        <Button x:Name="settingsButton" Content="" HorizontalAlignment="Left" Margin="423,16,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="18" Click="settingsButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="images/settingsButton.png"/>
             </Button.Background>

@@ -215,5 +215,14 @@ namespace Music_Shell
                 lb.Items.Add(tr.artist + " – " + tr.title);
             }
         }
+
+        public void save(int index)
+        {
+            if (index != -1 && (tracks[index].url != null))
+            {
+                WebClient Client = new WebClient();
+                Client.DownloadFile(tracks[index].url, Properties.Settings.Default.path + "\\" + tracks[index].artist + "-" + tracks[index].title + ".mp3");
+            }
+        }
     }
 }

@@ -26,6 +26,8 @@ namespace Music_Shell
 
         public int currentSongIndex = -1;
         public int currentFriendIndex = -1;
+        public int numOfSongs = 0;
+        public bool isAuth = false;
 
         public bool auth(Label usernameLabel, Image avatarImage, ListBox albumsListBox, ListBox songsListBox)
         {
@@ -60,10 +62,13 @@ namespace Music_Shell
                 songsListBox.Items.Clear();
                 this.loadAllSongs(200, songsListBox);
 
+                this.isAuth = true;
+
                 return true;
             }
             catch
             {
+                this.isAuth = false;
                 return false;
             }
         }
@@ -95,6 +100,7 @@ namespace Music_Shell
             this.albums = token["response"].Children().Skip(1).Select(c => c.ToObject<Album>()).ToList<Album>();
 
             lb.Items.Add("Все аудиозаписи");
+            numOfSongs = 0;
 
             foreach(Album al in this.albums)
             {
@@ -118,15 +124,17 @@ namespace Music_Shell
 
             this.tracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
 
+            numOfSongs = tracks.Count;
+
             foreach(Track tr in this.tracks)
             {
                 lb.Items.Add(tr.artist + " – " + tr.title);
             }
         }
 
-        public void loadAllSongs(int numOfLoadedSongs, ListBox lb)
+        public void loadAllSongs(int numOfLoadedSongs, ListBox lb, int offset = 0)
         {
-            WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + numOfLoadedSongs + "&access_token=" + Properties.Settings.Default.token);
+            WebRequest tracksRequestServer = WebRequest.Create("https://api.vk.com/method/audio.get?owner_id=" + Properties.Settings.Default.id + "&count=" + numOfLoadedSongs + "&offset=" + offset + "&access_token=" + Properties.Settings.Default.token);
             WebResponse tracksResponseServer = tracksRequestServer.GetResponse();
             Stream dataStream = tracksResponseServer.GetResponseStream();
             StreamReader dataReader = new StreamReader(dataStream);
@@ -139,6 +147,8 @@ namespace Music_Shell
             JToken token = JToken.Parse(tracksResponse);
 
             this.tracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
+
+            numOfSongs += tracks.Count;
 
             foreach (Track tr in this.tracks)
             {
@@ -209,6 +219,8 @@ namespace Music_Shell
             JToken token = JToken.Parse(tracksResponse);
 
             this.tracks = token["response"].Children().Skip(1).Select(c => c.ToObject<Track>()).ToList<Track>();
+
+            numOfSongs = tracks.Count;
 
             foreach (Track tr in this.tracks)
             {

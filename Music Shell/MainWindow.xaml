@@ -40,7 +40,7 @@
             </Button.Background>
         </Button>
         <Label x:Name="leftLabel" Content="альбомы" HorizontalAlignment="Left" Margin="19,50,0,0" VerticalAlignment="Top" Width="77" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
-        <ListBox x:Name="rightListBox" Margin="201,79,14,53" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FFD4D4D4" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" MaxWidth="314" Style="{DynamicResource ListBoxStyle}"/>
+        <ListBox x:Name="rightListBox" ScrollViewer.ScrollChanged="rightTextBox_ScrollChanged"  Margin="201,79,14,53" ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FFD4D4D4" ScrollViewer.HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" MaxWidth="314" Style="{DynamicResource ListBoxStyle}"/>
         <Rectangle HorizontalAlignment="Left" Height="233" Margin="195,54,0,0" Stroke="#FFD4D4D4" VerticalAlignment="Top" Width="1"/>
         <Label x:Name="rightLabel" Content="песни" HorizontalAlignment="Left" Margin="202,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.421,2.269" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semilight" FontSize="16"/>
         <Button x:Name="authButton" Content="" HorizontalAlignment="Left" Margin="19,17,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="20" Click="authButton_Click" Style="{DynamicResource authButton}">
@@ -166,7 +166,7 @@
         </Button>
         <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="19" Margin="419,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Background="#FF4A4A4A" Foreground="#FFD4D4D4" Text="" CaretBrush="#00000000" KeyDown="searchTextBox_KeyDown" LostFocus="searchTextBox_LostFocus" Visibility="Hidden"/>
         <ScrollViewer x:Name="titleLabelScroll" HorizontalAlignment="Left" Height="22" Margin="192,291,0,0" VerticalAlignment="Top" Width="229" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center">
-            <Label x:Name="titleLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" UseLayoutRounding="False" Padding="5,5,0,5" Height="27.333" SizeChanged="titleLabel_SizeChanged"/>
+            <Label x:Name="titleLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" UseLayoutRounding="False" Padding="5,5,0,5" Height="27.333"/>
         </ScrollViewer>
 
     </Grid>

@@ -19,6 +19,7 @@ using System.IO;
 using System.Web;
 using System.Windows.Threading;
 using System.Windows.Resources;
+using System.Windows.Controls.Primitives;
 
 namespace Music_Shell
 {
@@ -38,6 +39,7 @@ namespace Music_Shell
         private AppState appState = AppState.UserSongs;
         DispatcherTimer titleTimer = new DispatcherTimer();
         double offset = 0.0;
+        ScrollBar sb;
 
         public MainWindow()
         {
@@ -347,6 +349,7 @@ namespace Music_Shell
             base.OnSourceInitialized(e); // базовый функционал приложения в момент запуска для возможности последующего возврата
             createTrayIcon();
         }
+
         private System.Windows.Forms.NotifyIcon TrayIcon = null;
         private System.Windows.Controls.ContextMenu TrayMenu = null;
 
@@ -380,13 +383,13 @@ namespace Music_Shell
             TrayIcon.Visible = true;
             return result;
         }
+
         private void ShowHideMainWindow(object sender, RoutedEventArgs e)
         {
             TrayMenu.IsOpen = false;
             if (IsVisible)
             {
                 Hide();
-
                 (TrayMenu.Items[0] as System.Windows.Controls.MenuItem).Header = "Показать";//Изменение надписи на пункте контектного меню
             }
             else
@@ -398,6 +401,7 @@ namespace Music_Shell
                 Activate();
             }
         }
+
         //Отмена отображения вкладки на панели задач
         private WindowState fCurrentWindowState = WindowState.Normal;
         public WindowState CurrentWindowState
@@ -431,12 +435,6 @@ namespace Music_Shell
             sw = null;
         }
 
-        
-        private void titleLabel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
-
         void t_Tick(object sender, EventArgs e)
         {
             if (offset < titleLabelScroll.ScrollableWidth)
@@ -449,6 +447,43 @@ namespace Music_Shell
             } else
             {
                 offset = 0;
+            }
+        }
+
+        public static Visual GetDescendantByType(Visual element, Type type)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+            if (element.GetType() == type)
+            {
+                return element;
+            }
+            Visual foundElement = null;
+            if (element is FrameworkElement)
+            {
+                (element as FrameworkElement).ApplyTemplate();
+            }
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
+                foundElement = GetDescendantByType(visual, type);
+                if (foundElement != null)
+                {
+                    break;
+                }
+            }
+            return foundElement;
+        }
+
+        void rightTextBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            ScrollViewer sv = GetDescendantByType(rightListBox, typeof(ScrollViewer)) as ScrollViewer;
+
+            if (user.isAuth && e.VerticalOffset == sv.ScrollableHeight)
+            {
+                user.loadAllSongs(200, rightListBox, user.numOfSongs+3);
             }
         }
     }

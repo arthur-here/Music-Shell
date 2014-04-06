@@ -83,9 +83,8 @@
         </Button>
 
         <Slider x:Name="trackSlider" HorizontalAlignment="Left" Margin="145,314,0,6" Width="322" Style="{DynamicResource thickSlider}" PreviewMouseLeftButtonUp="trackSlider_PreviewMouseLeftButtonUp" Height="20" VerticalAlignment="Center" PreviewMouseLeftButtonDown="trackSlider_PreviewMouseLeftButtonDown"/>
-        <Label x:Name="startTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="153,292,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
+        <Label x:Name="startTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="153,290,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
         <Label x:Name="finishTimeLabel" Content="00:00" HorizontalAlignment="Left" Margin="422,290,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4"/>
-        <Label x:Name="titleLabel" Content="" HorizontalAlignment="Left" Margin="186,290,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" Width="238" UseLayoutRounding="False"/>
         <Button x:Name="exitButton" Content="" Margin="517,0,3,327" RenderTransformOrigin="-0.135,0.662" BorderBrush="{x:Null}" Height="10" VerticalAlignment="Bottom" Click="exitButton_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -166,6 +165,9 @@
             </Button.Template>
         </Button>
         <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="19" Margin="419,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Background="#FF4A4A4A" Foreground="#FFD4D4D4" Text="" CaretBrush="#00000000" KeyDown="searchTextBox_KeyDown" LostFocus="searchTextBox_LostFocus" Visibility="Hidden"/>
+        <ScrollViewer x:Name="titleLabelScroll" HorizontalAlignment="Left" Height="22" Margin="192,291,0,0" VerticalAlignment="Top" Width="229" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center">
+            <Label x:Name="titleLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0.447,-0.077" Foreground="#FFD4D4D4" FontFamily="Segoe UI Semibold" TextOptions.TextHintingMode="Fixed" HorizontalContentAlignment="Center" UseLayoutRounding="False" Padding="5,5,0,5" Height="27.333" SizeChanged="titleLabel_SizeChanged"/>
+        </ScrollViewer>
 
     </Grid>
 </Window>

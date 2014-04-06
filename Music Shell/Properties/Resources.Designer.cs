@@ -69,5 +69,15 @@ namespace Music_Shell.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon icon32 {
+            get {
+                object obj = ResourceManager.GetObject("icon32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

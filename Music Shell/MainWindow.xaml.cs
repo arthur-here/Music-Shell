@@ -36,7 +36,8 @@ namespace Music_Shell
         private DispatcherTimer timer;
         private MediaState state = MediaState.Pause;
         private AppState appState = AppState.UserSongs;
-        private bool IsToggle;
+        DispatcherTimer titleTimer = new DispatcherTimer();
+        double offset = 0.0;
 
         public MainWindow()
         {
@@ -52,10 +53,17 @@ namespace Music_Shell
             player.MediaEnded += new EventHandler(player_MediaEnded);
             player.MediaFailed += new EventHandler<ExceptionEventArgs>(player_MediaFailed);
             trackSlider.Tag = true;
+            titleTimer.Tick += new EventHandler(t_Tick);
+            titleTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            titleTimer.Start(); 
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (searchTextBox.IsFocused)
+            {
+                searchTextBox.Visibility = Visibility.Hidden;
+            }
             this.DragMove();
         }
 
@@ -119,6 +127,7 @@ namespace Music_Shell
             MediaPlayer mp = sender as MediaPlayer;
             String time = mp.NaturalDuration.ToString();
             startTimeLabel.Content = "00:00";
+            offset = 0.0;
 
             state = MediaState.Play;
 
@@ -347,7 +356,7 @@ namespace Music_Shell
             if (TrayIcon == null)
             {
                 TrayIcon = new System.Windows.Forms.NotifyIcon();
-                TrayIcon.Icon = Music_Shell.Properties.Resources.icon128;
+                TrayIcon.Icon = Music_Shell.Properties.Resources.icon32;
                 TrayIcon.Text = (titleLabel.Content.ToString() == "") ? ("Music Shell") : (titleLabel.Content.ToString());
                 TrayMenu = Resources["TrayMenu"] as System.Windows.Controls.ContextMenu;// создание контекстного меню трея
                 TrayIcon.Click += delegate(object sender, EventArgs e)//Делегат обрабатывающий щелчок мыши
@@ -416,7 +425,31 @@ namespace Music_Shell
         private void settingsButton_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow sw = new SettingsWindow();
+            sw.Left = Application.Current.MainWindow.Left + 20;
+            sw.Top = Application.Current.MainWindow.Top + 30;
             sw.ShowDialog();
+            sw = null;
+        }
+
+        
+        private void titleLabel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        void t_Tick(object sender, EventArgs e)
+        {
+            if (offset < titleLabelScroll.ScrollableWidth)
+            {
+                offset += 3;
+                titleLabelScroll.ScrollToHorizontalOffset(offset);
+            } else if (titleLabel.Width < titleLabelScroll.Width)
+            {
+                ;
+            } else
+            {
+                offset = 0;
+            }
         }
     }
 }
